@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+#
+# Creation:    25.05.2015
+# Last Update: 28.08.2016
+#
+# Copyright (c) 2015-2016 by Georg Kainzbauer <http://www.gtkdb.de>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+
+# import required modules
+import socket
+import fcntl
+import struct
+
+# function to get ip address of given interface
+def get_ip(interface):
+    ip_addr = "Not connected"
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        ip_addr = socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', interface[:15]))[20:24])
+    finally:
+        return ip_addr
+
+import itertools
+import os
+import re
+
+def getip():
+    f = os.popen('ifconfig')
+    for iface in [' '.join(i) for i in iter(lambda: list(itertools.takewhile(lambda l: not l.isspace(),f)), [])]:
+        if re.findall('^(eth|wlan)[0-9]',iface) and re.findall('RUNNING',iface):
+            ip = re.findall('(?<=inet\saddr:)[0-9\.]+',iface)
+            if ip:
+                return ip[0]
+    return False
+
+def ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return (s.getsockname()[0])
+    s.close()
+
+
+def main():
+    print get_ip("wlan0")
+    print get_ip("eth0")
+    print get_ip("enxb827eb488a6e")
+    print getip()
+    print ip()
+    
+
+if __name__ == "__main__":
+    main()
