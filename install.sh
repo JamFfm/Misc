@@ -23,7 +23,8 @@ show_menu () {
    "11" "Install SQL Light Client" \
    "12" "Install Mqtt lib" \
    "13" "Install Mqtt broker" \
-   "14" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
+   "14" "Clone alles von meinen Misc in Downloads" \
+   "15" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
@@ -176,6 +177,15 @@ show_menu () {
             fi
             ;;
          14)
+            confirmAnswer "Are you sure to clone all Misc to Downloads?"
+            if [ $? = 0 ]; then
+              sudo git clone https://github.com/JamFfm/Misc.git --single-branch /home/pi/Downloads/Misc
+              show_menu
+            else
+              show_menu
+            fi
+            ;;
+         15)
             confirmAnswer "Are you sure Restart RBPI3?"
             if [ $? = 0 ]; then
               sudo /etc/init.d/craftbeerpiboot stop
