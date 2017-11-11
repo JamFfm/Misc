@@ -24,7 +24,8 @@ show_menu () {
    "12" "Install Mqtt lib" \
    "13" "Install Mqtt broker" \
    "14" "Clone alles von meinen Misc in Downloads" \
-   "15" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
+   "15" "Detect I2C address (ex.for LCDDisplay plugin)" \
+   "16" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
@@ -66,7 +67,7 @@ show_menu () {
            sed "s@#DIR#@${PWD}@g" config/craftbeerpiboot > /etc/init.d/craftbeerpiboot
            chmod 755 /etc/init.d/craftbeerpiboot;
 
-           whiptail --title "Installition Finished" --msgbox "CraftBeerPi installation finished! You must hit OK to continue." 8 78
+           whiptail --title "Installation Finished" --msgbox "CraftBeerPi installation finished! You must hit OK to continue." 8 78
            show_menu
            ;;
        2)
@@ -177,7 +178,7 @@ show_menu () {
             fi
             ;;
          14)
-            confirmAnswer "Are you sure to clone all Misc to Downloads?"
+            confirmAnswer "Are you sure to clone all Jans-Misc to Downloads?"
             if [ $? = 0 ]; then
               sudo git clone https://github.com/JamFfm/Misc.git --single-branch /home/pi/Downloads/Misc
               show_menu
@@ -186,6 +187,17 @@ show_menu () {
             fi
             ;;
          15)
+            confirmAnswer "Are you sure to detect the I2C address? There is an error shown cause only one of 2 ports is available"
+            if [ $? = 0 ]; then
+              sudo i2cdetect -y 1
+              sudo i2cdetect -y 0
+              read -p "weiter mit Enter"
+              show_menu
+            else
+              show_menu
+            fi
+            ;;
+         16)
             confirmAnswer "Are you sure Restart RBPI3?"
             if [ $? = 0 ]; then
               sudo /etc/init.d/craftbeerpiboot stop
