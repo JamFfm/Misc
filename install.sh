@@ -250,9 +250,9 @@ show_menu () {
             fi
             ;;
          20)
-            confirmAnswer "Are you sure to install BetterCharts? Currently in in beta Mode!"
+            confirmAnswer "Are you sure to install BetterCharts? Please install ExtendedMenue as Addon via CBPi3 first"
             if [ $? = 0 ]; then
-              git clone https://github.com/MiracelVip/cbpi-BetterChart /home/pi/craftbeerpi3/modules/plugins/cbpi-BetterChart
+              git clone https://github.com/JamFfm/cbpi-BetterChart /home/pi/craftbeerpi3/modules/plugins/cbpi-BetterChart
               read -p "weiter mit Enter"
               show_menu
             else
