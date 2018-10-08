@@ -27,10 +27,11 @@ show_menu () {
    "15" "Install TFTDisplay libs" \
    "16" "Install Alexa libs. Notice Readme of addon" \
    "17" "Install rrdTool" \
-   "18" "Detect I2C address (ex.for LCDDisplay plugin)" \
+   "18" "Detect I2C address (ex.for LCDDisplay addon)" \
    "19" "Install MCP3008 read analog devices" \
-   "20" "Install betterCharts Plugin" \
-   "21" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
+   "20" "Install betterCharts addon" \
+   "21" "Install bbpi-wav-buzzer addon" \
+   "22" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
@@ -258,8 +259,20 @@ show_menu () {
             else
               show_menu
             fi
-            ;;            
+            ;;
+
          21)
+            confirmAnswer "Are you sure to install cbpi-wav-buzzer? Please install hardware sound output on RasPi"
+            if [ $? = 0 ]; then
+              git clone https://github.com/jalim/cbpi-wav-buzzer -b master --single-branch /home/pi/craftbeerpi3/modules/plugins/cbpi-wav-buzzer
+              read -p "weiter mit Enter"
+              show_menu
+            else
+              show_menu
+            fi
+            ;;            
+            
+         22)
             confirmAnswer "Are you sure Restart CBPI3?"
             if [ $? = 0 ]; then
               sudo /etc/init.d/craftbeerpiboot stop
