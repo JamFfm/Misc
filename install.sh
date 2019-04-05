@@ -200,7 +200,7 @@ show_menu () {
 	      sudo pip install pathlib
 	      sudo pip install RPi.GPIO
 	      sudo git clone https://github.com/adafruit/Adafruit_Python_ILI9341.git
-	      cd Adafruit_Python_ILI9341
+	      cd /home/pi/craftbeerpi3/Adafruit_Python_ILI9341
 	      sudo python setup.py install
               show_menu
             else
