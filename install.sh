@@ -202,6 +202,7 @@ show_menu () {
 	      sudo git clone https://github.com/adafruit/Adafruit_Python_ILI9341.git
 	      cd /home/pi/craftbeerpi3/Adafruit_Python_ILI9341
 	      sudo python setup.py install
+	      sudo chown -R pi /home/pi/craftbeerpi3/Adafruit_Python_ILI9341
               show_menu
             else
               show_menu
