@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=CraftBeerPi
+Comment=CraftBeerPi3.02
+Icon=/usr/share/craftbeerpi/logo.png
+Exec=/home/pi/los.sh
+Type=Application
+Encoding=UTF-8
+Terminal=true
+Categories=None;file:///home/pi/craftbeerpi3/logo.png
+StartupNotify=true

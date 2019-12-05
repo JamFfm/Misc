@@ -27,10 +27,10 @@ show_menu () {
    "15" "Install TFTDisplay libs" \
    "16" "Install Alexa libs. Notice Readme of addon" \
    "17" "Install rrdTool" \
-   "18" "Detect I2C address (ex.for LCDDisplay addon)" \
+   "18" "Detect I2C address (ex.for LCDDisplay plugin)" \
    "19" "Install MCP3008 read analog devices" \
-   "20" "Install betterCharts addon" \
-   "21" "Install bbpi-wav-buzzer addon" \
+   "20" "Install betterCharts Plugin" \
+   "21" "Install Wiring PI if default Setup has got problems" \
    "22" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
@@ -200,7 +200,7 @@ show_menu () {
 	      sudo pip install pathlib
 	      sudo pip install RPi.GPIO
 	      sudo git clone https://github.com/adafruit/Adafruit_Python_ILI9341.git
-	      cd /home/pi/craftbeerpi3/Adafruit_Python_ILI9341
+	      cd Adafruit_Python_ILI9341
 	      sudo python setup.py install
 	      sudo chown -R pi /home/pi/craftbeerpi3/Adafruit_Python_ILI9341
               show_menu
@@ -252,27 +252,25 @@ show_menu () {
             fi
             ;;
          20)
-            confirmAnswer "Are you sure to install BetterCharts? Please install ExtendedMenue as Addon via CBPi3 first"
+            confirmAnswer "Are you sure to install BetterCharts? Currently in in beta Mode!"
             if [ $? = 0 ]; then
-              git clone https://github.com/JamFfm/cbpi-BetterChart /home/pi/craftbeerpi3/modules/plugins/cbpi-BetterChart
+              git clone https://github.com/MiracelVip/cbpi-BetterChart /home/pi/craftbeerpi3/modules/plugins/cbpi-BetterChart
               read -p "weiter mit Enter"
               show_menu
             else
               show_menu
             fi
             ;;
-
          21)
-            confirmAnswer "Are you sure to install cbpi-wav-buzzer? Please install hardware sound output on RasPi"
+            confirmAnswer "Are you sure to install Wiring PI from different repro? "
             if [ $? = 0 ]; then
-              git clone https://github.com/jalim/cbpi-wav-buzzer -b master --single-branch /home/pi/craftbeerpi3/modules/plugins/cbpi-wav-buzzer
+              git clone https://github.com/wiringpi/wiringpi.git
               read -p "weiter mit Enter"
               show_menu
             else
               show_menu
             fi
-            ;;            
-            
+            ;;
          22)
             confirmAnswer "Are you sure Restart CBPI3?"
             if [ $? = 0 ]; then
