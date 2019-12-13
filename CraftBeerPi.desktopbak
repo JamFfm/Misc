@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=CraftBeerPi
+Comment=CraftBeerPi3.02
+Icon=/home/pi/craftbeerpi3/modules/ui/static/logo.png
+Exec=sudo /home/pi/craftbeerpi3/install.sh
+Type=Application
+Encoding=UTF-8
+Terminal=true
+Categories=None
+StartupNotify=true
+X-KeepTerminal=true
+Path=/home/pi/craftbeerpi3/
