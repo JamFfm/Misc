@@ -253,7 +253,7 @@ show_menu () {
            fi
            ;;
        21)
-           confirmAnswer "Install desktopicon?"
+           confirmAnswer "Install desktopicon? Sorry only german installations"
            if [ $? = 0 ]; then
             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/CraftBeerPi.desktop
             sudo mv CraftBeerPi.desktop /home/pi/Schreibtisch
