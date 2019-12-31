@@ -31,7 +31,7 @@ show_menu () {
    "19" "Install MCP3008 to read analog devices" \
    "20" "Install betterCharts Plugin" \
    "21" "Install CBPi desktop icon" \
-   "22" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
+   "22" "Stop -del all Logfiles- Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
