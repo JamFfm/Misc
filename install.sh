@@ -69,7 +69,7 @@ show_menu () {
            show_menu
            ;;
        2)
-           confirmAnswer "Are you sure you want to clear the CraftBeerPi. All hardware setting will be deleted"
+           confirmAnswer "Are you sure you want to clear the CraftBeerPi Database? All hardware setting will be deleted"
            if [ $? = 0 ]; then
              sudo rm -f craftbeerpi.db
              whiptail --title "Database Delted" --msgbox "The CraftBeerPi database was succesfully deleted. You must hit OK to continue." 8 78
