@@ -1,5 +1,5 @@
 #!/bin/bash
-#CraftBeerPi Installer
+# CraftBeerPi Installer
 # Copy 2017 Manuel Fritsch
 
 confirmAnswer () {
