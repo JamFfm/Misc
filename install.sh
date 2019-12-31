@@ -1,5 +1,5 @@
 #!/bin/bash
-#CraftBeerPi Installer
+# CraftBeerPi Installer
 # Copy 2017 Manuel Fritsch
 
 confirmAnswer () {
@@ -31,7 +31,7 @@ show_menu () {
    "19" "Install MCP3008 to read analog devices" \
    "20" "Install betterCharts Plugin" \
    "21" "Install CBPi desktop icon" \
-   "22" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
+   "22" "Stop -del all Logfiles- Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
@@ -69,7 +69,7 @@ show_menu () {
            show_menu
            ;;
        2)
-           confirmAnswer "Are you sure you want to clear the CraftBeerPi. All hardware setting will be deleted"
+           confirmAnswer "Are you sure you want to clear the CraftBeerPi Database? All hardware setting will be deleted"
            if [ $? = 0 ]; then
              sudo rm -f craftbeerpi.db
              whiptail --title "Database Delted" --msgbox "The CraftBeerPi database was succesfully deleted. You must hit OK to continue." 8 78
@@ -253,7 +253,7 @@ show_menu () {
            fi
            ;;
        21)
-           confirmAnswer "Install desktopicon?"
+           confirmAnswer "Install desktopicon? Sorry only german installations"
            if [ $? = 0 ]; then
             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/CraftBeerPi.desktop
             sudo mv CraftBeerPi.desktop /home/pi/Schreibtisch
