@@ -74,9 +74,13 @@ install patch for proprer window boarders:
     Ctrl-w -> search for "container-fluid"
     Scroll a bit to the right until you find"{margin-left:-15px;margin-right:-15px}"
     change to {margin-left:-15px;margin-right:-5px}
+    
     Ctrl-x to save/close
+    
     reboot
+    
     Remember to clear cache in browser
+    
 
 Have fun brewing!!
 
