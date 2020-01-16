@@ -67,7 +67,9 @@ Install it via install script or use:
 install patch for proprer window boarders:
 
     sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/bootstrap.dark.css
-    or
+    
+    or do it manually:
+    
     Start nano editor: "sudo nano craftbeerpi3/modules/ui/static/bootstrap.dark.css"
     Ctrl-w -> search for "container-fluid"
     Scroll a bit to the right until you find"{margin-left:-15px;margin-right:-15px}"
