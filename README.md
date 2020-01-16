@@ -62,6 +62,19 @@ Install it via install script or use:
     sudo apt-get update
     sudo apt-get install sqlitebrowser
 
+## bootstrap.dark.css
+
+install patch for proprer window boarders:
+
+    sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/bootstrap.dark.css
+    or
+    Start nano editor: "sudo nano craftbeerpi3/modules/ui/static/bootstrap.dark.css"
+    Ctrl-w -> search for "container-fluid"
+    Scroll a bit to the right until you find"{margin-left:-15px;margin-right:-15px}"
+    change to {margin-left:-15px;margin-right:-5px}
+    Ctrl-x to save/close
+    reboot
+    Remember to clear cache in browser
 
 Have fun brewing!!
 
