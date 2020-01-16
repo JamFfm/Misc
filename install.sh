@@ -1,5 +1,5 @@
 #!/bin/bash
-# CraftBeerPi Installer
+#CraftBeerPi Installer
 # Copy 2017 Manuel Fritsch
 
 confirmAnswer () {
@@ -31,7 +31,8 @@ show_menu () {
    "19" "Install MCP3008 to read analog devices" \
    "20" "Install betterCharts Plugin" \
    "21" "Install CBPi desktop icon" \
-   "22" "Stop -del all Logfiles- Start"  3>&1 1>&2 2>&3)
+   "22" "Install patch for proper window borders"\
+   "23" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
@@ -69,7 +70,7 @@ show_menu () {
            show_menu
            ;;
        2)
-           confirmAnswer "Are you sure you want to clear the CraftBeerPi Database? All hardware setting will be deleted"
+           confirmAnswer "Are you sure you want to clear the CraftBeerPi. All hardware setting will be deleted"
            if [ $? = 0 ]; then
              sudo rm -f craftbeerpi.db
              whiptail --title "Database Delted" --msgbox "The CraftBeerPi database was succesfully deleted. You must hit OK to continue." 8 78
@@ -191,7 +192,7 @@ show_menu () {
       	     sudo pip install pathlib
       	     sudo pip install RPi.GPIO
       	     sudo git clone https://github.com/adafruit/Adafruit_Python_ILI9341.git
-      	     cd Adafruit_Python_ILI9341
+      	     cd Adafruit_Python_ILI9341 || exit
       	     sudo python setup.py install
       	     sudo chown -R pi /home/pi/craftbeerpi3/Adafruit_Python_ILI9341
              show_menu
@@ -232,9 +233,9 @@ show_menu () {
            if [ $? = 0 ]; then
              sudo apt-get update
              sudo apt-get install build-essential python-dev python-smbus git
-             cd /home/pi/craftbeerpi3
+             cd /home/pi/craftbeerpi3 || exit
              git clone https://github.com/adafruit/Adafruit_Python_MCP3008.git
-             cd Adafruit_Python_MCP3008
+             cd Adafruit_Python_MCP3008 || exit
              sudo python setup.py install
              read -p "weiter mit Enter"
              show_menu
@@ -253,7 +254,7 @@ show_menu () {
            fi
            ;;
        21)
-           confirmAnswer "Install desktopicon? Sorry only german installations"
+           confirmAnswer "Install desktopicon?"
            if [ $? = 0 ]; then
             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/CraftBeerPi.desktop
             sudo mv CraftBeerPi.desktop /home/pi/Schreibtisch
@@ -265,6 +266,18 @@ show_menu () {
            fi
            ;;
        22)
+           confirmAnswer "Install margain update (proper distance at the boarders of window)?"
+           if [ $? = 0 ]; then
+            sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/bootstrap.dark.css
+            sudo mv bootstrap.dark.css /home/pi/craftbeerpi3/modules/ui/static
+            sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/bootstrap.dark.css
+            read -p "weiter mit Enter"
+            show_menu
+           else
+             show_menu
+           fi
+           ;;
+       23)
            confirmAnswer "Are you sure Restart CBPI3?"
            if [ $? = 0 ]; then
             sudo /etc/init.d/craftbeerpiboot stop
