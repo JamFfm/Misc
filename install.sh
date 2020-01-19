@@ -32,7 +32,8 @@ show_menu () {
    "20" "Install betterCharts Plugin" \
    "21" "Install CBPi desktop icon" \
    "22" "Install patch for proper window borders"\
-   "23" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
+   "23" "Install patch for use sonoff with mqtt"\
+   "24" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
@@ -278,6 +279,18 @@ show_menu () {
            fi
            ;;
        23)
+           confirmAnswer "Install patch for use sonoff with mqtt. First install mqtt addon from CBPI?"
+           if [ $? = 0 ]; then
+            sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/__init__.py.mqtt
+            sudo mv -b __init__.py.mqtt /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/mv __init__.py
+            sudo chmod a+rwx /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
+            read -p "weiter mit Enter"
+            show_menu
+           else
+             show_menu
+           fi
+           ;;
+       24)
            confirmAnswer "Are you sure Restart CBPI3?"
            if [ $? = 0 ]; then
             sudo /etc/init.d/craftbeerpiboot stop
