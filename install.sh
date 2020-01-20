@@ -1,15 +1,15 @@
 #!/bin/bash
-#CraftBeerPi Installer
+# CraftBeerPi Installer
 # Copy 2017 Manuel Fritsch
 
 confirmAnswer () {
-whiptail --title "Confirmation" --yes-button "Yes" --no-button "No"  --defaultno --yesno "$1" 10 56
+whiptail --title "Confirmation" --yes-button "Yes" --no-button "No"  --defaultno --yesno "$1" 30 56
 return $?
 }
 
 show_menu () {
    # We show the host name right in the menu title so we know which Pi we are connected to
-   OPTION=$(whiptail --title "CraftBeerPi 3.0.2" --menu "Choose your option:" 15 56 7 \
+   OPTION=$(whiptail --title "CraftBeerPi 3.0.2" --menu "Choose your option:" 20 70 14 \
    "1" "Install CraftBeerPi" \
    "2" "Clear Database" \
    "3" "Add To Autostart" \
@@ -103,7 +103,7 @@ show_menu () {
            ;;
        5)
            sudo /etc/init.d/craftbeerpiboot start
-           ipaddr = ifconfig wlan0 | awk '/t addr:/{gsub(/.*:/,"",$2);print$2}'
+           ipaddr="$(sudo ip addr show dev "$(ip route ls|awk '/default/ {print $5}')"|grep -Po 'inet \K(\d{1,3}\.?){4}')"
            whiptail --title "CraftBeerPi started" --msgbox "Please connect via Browser: http://$ipaddr:5000" 8 78
            show_menu
            ;;
@@ -211,7 +211,7 @@ show_menu () {
            fi
            ;;
 	     17)
-	         confirmAnswer "Please install rrdTool with Raspi GUI?"
+	         confirmAnswer "Please install rrdTool with Raspi GUI!"
 	         if [ $? = 0 ]; then
              show_menu
            else
@@ -223,7 +223,7 @@ show_menu () {
            if [ $? = 0 ]; then
              sudo i2cdetect -y 1
              sudo i2cdetect -y 0
-             read -p "weiter mit Enter"
+             read -r -p "weiter mit Enter"
              show_menu
            else
              show_menu
@@ -238,7 +238,7 @@ show_menu () {
              git clone https://github.com/adafruit/Adafruit_Python_MCP3008.git
              cd Adafruit_Python_MCP3008 || exit
              sudo python setup.py install
-             read -p "weiter mit Enter"
+             read -r -p "weiter mit Enter"
              show_menu
            else
              show_menu
@@ -248,20 +248,20 @@ show_menu () {
            confirmAnswer "Are you sure to install BetterCharts? Currently in in beta Mode!"
            if [ $? = 0 ]; then
              git clone https://github.com/MiracelVip/cbpi-BetterChart /home/pi/craftbeerpi3/modules/plugins/cbpi-BetterChart
-             read -p "weiter mit Enter"
+             read -r -p "weiter mit Enter"
              show_menu
            else
              show_menu
            fi
            ;;
        21)
-           confirmAnswer "Install desktopicon?"
+           confirmAnswer "Install CBPi desktop icon?"
            if [ $? = 0 ]; then
-            sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/CraftBeerPi.desktop
-            sudo mv CraftBeerPi.desktop /home/pi/Schreibtisch
-            sudo chmod a+rwx /home/pi/Schreibtisch/CraftBeerPi.desktop
-            read -p "weiter mit Enter"
-            show_menu
+             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/CraftBeerPi.desktop
+             sudo mv CraftBeerPi.desktop /home/pi/Schreibtisch
+             sudo chmod a+rwx /home/pi/Schreibtisch/CraftBeerPi.desktop
+             read -r -p "weiter mit Enter"
+             show_menu
            else
              show_menu
            fi
@@ -269,22 +269,22 @@ show_menu () {
        22)
            confirmAnswer "Install margain update (proper distance at the boarders of window)?"
            if [ $? = 0 ]; then
-            sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/bootstrap.dark.css
-            sudo mv bootstrap.dark.css /home/pi/craftbeerpi3/modules/ui/static
-            sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/bootstrap.dark.css
-            read -p "weiter mit Enter"
-            show_menu
+             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/bootstrap.dark.css
+             sudo mv -b bootstrap.dark.css /home/pi/craftbeerpi3/modules/ui/static
+             sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/bootstrap.dark.css
+             read -r -p "weiter mit Enter"
+             show_menu
            else
              show_menu
            fi
            ;;
        23)
-           confirmAnswer "Install patch for use sonoff with mqtt. First install mqtt addon from CBPI?"
+           confirmAnswer "Install patch for use sonoff with mqtt. First install mqtt addon from CBPI!"
            if [ $? = 0 ]; then
-            sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/__init__.py.mqtt
-            sudo mv -b __init__.py.mqtt /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/mv __init__.py
-            sudo chmod a+rwx /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
-            read -p "weiter mit Enter"
+             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/__init__.py.mqtt
+             sudo mv -b __init__.py.mqtt /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
+             sudo chmod a+rwx /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
+             read -r -p "weiter mit Enter"
             show_menu
            else
              show_menu
