@@ -279,7 +279,7 @@ show_menu () {
            fi
            ;;
        23)
-           confirmAnswer "Install patch for use sonoff with mqtt. First install mqtt addon from CBPI!"
+           confirmAnswer "Install patch for use mqtt of a sonoff with tasmota firmware. First install mqtt addon from CBPI!"
            if [ $? = 0 ]; then
              sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/__init__.py.mqtt
              sudo mv -b __init__.py.mqtt /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
