@@ -3,7 +3,7 @@
 # Copy 2017 Manuel Fritsch
 
 confirmAnswer () {
-whiptail --title "Confirmation" --yes-button "Yes" --no-button "No"  --defaultno --yesno "$1" 30 56
+whiptail --title "Confirmation" --yes-button "Yes" --no-button "No"  --defaultno --yesno "$1" 10 56
 return $?
 }
 
@@ -33,7 +33,8 @@ show_menu () {
    "21" "Install CBPi desktop icon" \
    "22" "Install patch for proper window borders"\
    "23" "Install patch for use sonoff with mqtt"\
-   "24" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
+   "24" "Add metatag to enable ""Add to home"" screen on IOS devices #230"\
+   "25" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
@@ -168,7 +169,7 @@ show_menu () {
            fi
            ;;
        13)
-           confirmAnswer "Are you sure to install MQTT Broker mosquitto? Please  use this only when you want to use Mqtt protokoll!"
+           confirmAnswer "Are you sure to install MQTT Broker mosquitto? Please use this only when you want to use Mqtt protokoll!"
            if [ $? = 0 ]; then
              sudo apt-get update
              sudo apt-get install mosquitto
@@ -178,7 +179,7 @@ show_menu () {
            fi
            ;;
        14)
-           confirmAnswer "Are you sure to clone all Misc to Downloads?"
+           confirmAnswer "Are you sure to clone all files from Git JamFfm Misc to Downloads?"
            if [ $? = 0 ]; then
              sudo git clone https://github.com/JamFfm/Misc.git --single-branch /home/pi/Downloads/Misc
              show_menu
@@ -211,7 +212,7 @@ show_menu () {
            fi
            ;;
 	     17)
-	         confirmAnswer "Please install rrdTool with Raspi GUI!"
+	         confirmAnswer "Please install rrdTool for TFTDisplay addon from Raspi GUI!"
 	         if [ $? = 0 ]; then
              show_menu
            else
@@ -219,11 +220,11 @@ show_menu () {
            fi
            ;;
        18)
-           confirmAnswer "Are you sure to detect the I2C address? There is an error shown cause only one of 2 ports is available"
+           confirmAnswer "Are you sure to detect the I2C address? There is an error because usually only one of 2 ports is available"
            if [ $? = 0 ]; then
              sudo i2cdetect -y 1
              sudo i2cdetect -y 0
-             read -r -p "weiter mit Enter"
+             read -r -p "press enter to continue"
              show_menu
            else
              show_menu
@@ -238,17 +239,17 @@ show_menu () {
              git clone https://github.com/adafruit/Adafruit_Python_MCP3008.git
              cd Adafruit_Python_MCP3008 || exit
              sudo python setup.py install
-             read -r -p "weiter mit Enter"
+             read -r -p "press enter to continue"
              show_menu
            else
              show_menu
            fi
            ;;
        20)
-           confirmAnswer "Are you sure to install BetterCharts? Currently in in beta Mode!"
+           confirmAnswer "Are you sure to install BetterCharts? Currently in in beta Mode! Please install addon ExtendedMenu first"
            if [ $? = 0 ]; then
              git clone https://github.com/MiracelVip/cbpi-BetterChart /home/pi/craftbeerpi3/modules/plugins/cbpi-BetterChart
-             read -r -p "weiter mit Enter"
+             read -r -p "press enter to continue"
              show_menu
            else
              show_menu
@@ -260,19 +261,19 @@ show_menu () {
              sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/CraftBeerPi.desktop
              sudo mv CraftBeerPi.desktop /home/pi/Schreibtisch
              sudo chmod a+rwx /home/pi/Schreibtisch/CraftBeerPi.desktop
-             read -r -p "weiter mit Enter"
+             read -r -p "press enter to continue"
              show_menu
            else
              show_menu
            fi
            ;;
        22)
-           confirmAnswer "Install margain update (proper distance at the boarders of window)?"
+           confirmAnswer "Install border update (proper distance at the boarders of window)?"
            if [ $? = 0 ]; then
              sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/bootstrap.dark.css
              sudo mv -b bootstrap.dark.css /home/pi/craftbeerpi3/modules/ui/static
              sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/bootstrap.dark.css
-             read -r -p "weiter mit Enter"
+             read -r -p "press enter to continue"
              show_menu
            else
              show_menu
@@ -284,13 +285,25 @@ show_menu () {
              sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/__init__.py.mqtt
              sudo mv -b __init__.py.mqtt /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
              sudo chmod a+rwx /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
-             read -r -p "weiter mit Enter"
+             read -r -p "press enter to continue"
             show_menu
            else
              show_menu
            fi
            ;;
        24)
+           confirmAnswer "add metatag to enable ""Add to home"" screen on IOS devices #230"
+           if [ $? = 0 ]; then
+             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/index.html
+             sudo mv -b index.html /home/pi/craftbeerpi3/modules/ui/static/index.html
+             sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/index.html
+             read -r -p "press enter to continue"
+            show_menu
+           else
+             show_menu
+           fi
+           ;;
+       25)
            confirmAnswer "Are you sure Restart CBPI3?"
            if [ $? = 0 ]; then
             sudo /etc/init.d/craftbeerpiboot stop
