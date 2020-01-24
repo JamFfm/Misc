@@ -68,19 +68,53 @@ install patch for proprer window boarders:
 
     sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/bootstrap.dark.css
     
-    or do it manually:
+ or do it manually:
     
-    Start nano editor: "sudo nano craftbeerpi3/modules/ui/static/bootstrap.dark.css"
-    Ctrl-w -> search for "container-fluid"
-    Scroll a bit to the right until you find"{margin-left:-15px;margin-right:-15px}"
-    change to {margin-left:-15px;margin-right:-5px}
+ Start nano editor: "sudo nano craftbeerpi3/modules/ui/static/bootstrap.dark.css"
+ Ctrl-w -> search for "container-fluid"
+ Scroll a bit to the right until you find"{margin-left:-15px;margin-right:-15px}"
+ change to {margin-left:-15px;margin-right:-5px}
     
-    Ctrl-x to save/close
+ Ctrl-x to save/close
     
-    reboot
+ reboot
     
-    Remember to clear cache in browser
+ Remember to clear cache in browser
     
+## add an CBPi icon on ios gadgets while storing link to CBpi ##
+
+     <head> 
+        
+        <meta charset="utf-8"> 
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />          -->new 
+        <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">         
+        <link rel="stylesheet" href="static/bootstrap.min.css"> 
+        <link rel="stylesheet" href="static/css/font-awesome.min.css"> 
+        <link rel="stylesheet" href="static/bootstrap.dark.css"> 
+        <link rel="apple-touch-icon" href="/ui/static/logo.png" />          -->new
+        <title>CraftBeerPi 3.0</title> 
+      </head> 
+      <body>
+      ......
+
+## add sound to the browser -this is cool- ##
+
+To add sound to the browser, do the following:
+in the file home /pi/craftbeerpi3/modules/ui/static/bundle.js Add the code after the fragment "var e=this.props.messages;":
+var audioAlert = new Audio ("static/beep.wav");
+audioAlert.play();
+
+it looks like: 
+
+    .....var e=this.props.messages;var audioAlert=new Audio ("static/beep.wav");audioAlert.play();return d.default.createElem.....
+
+And put any wav file in the folder home/pi/craftbeerpi3/modules/ui/static/ called beep.wav "
+
+
+
 
 Have fun brewing!!
 
