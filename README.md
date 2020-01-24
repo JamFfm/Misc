@@ -51,7 +51,7 @@ Use the file without x.mqtt ending in the path of the mqtt addon.
 
 ## cbpi-BetterChart
 
-Add a new chart engine to cbpi
+Add a new chart engine to cbpi. But first you have to install the CBPi addon "ExtendedMenue"
 
     git clone https://github.com/MiracelVip/cbpi-BetterChart /home/pi/craftbeerpi3/modules/plugins/cbpi-BetterChart
 
