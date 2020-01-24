@@ -31,10 +31,10 @@ show_menu () {
    "19" "Install MCP3008 to read analog devices" \
    "20" "Install betterCharts Plugin" \
    "21" "Install CBPi desktop icon" \
-   "22" "Install patch for proper window borders"\
-   "23" "Install patch for use sonoff with mqtt"\
-   "24" "Add metatag to enable ""Add to home"" screen on IOS devices #230"\
-   "25" "add sound massages to the browser"\
+   "22" "Install patch for proper window borders" \
+   "23" "Install patch for use sonoff with mqtt" \
+   "24" "Add metatag to enable ""Add to home"" screen on IOS devices #230" \
+   "25" "add sound massages to the browser" \
    "26" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
