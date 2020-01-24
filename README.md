@@ -83,6 +83,10 @@ install patch for proprer window boarders:
     
 ## add an CBPi icon on ios gadgets while storing link to CBpi ##
 
+This downloads the index.html file from Misc to /home/pi/craftbeerpi3/modules/ui/static/index.html.
+
+There are two lines added in the index html file:
+
      <head> 
         
         <meta charset="utf-8"> 
@@ -103,8 +107,13 @@ install patch for proprer window boarders:
 ## add sound to the browser -this is cool- ##
 
 To add sound to the browser, do the following:
-in the file home /pi/craftbeerpi3/modules/ui/static/bundle.js Add the code after the fragment "var e=this.props.messages;":
+
+open the file home /pi/craftbeerpi3/modules/ui/static/bundle.js 
+
+Add the code after the fragment "var e=this.props.messages;":
+
 var audioAlert = new Audio ("static/beep.wav");
+
 audioAlert.play();
 
 it looks like: 
