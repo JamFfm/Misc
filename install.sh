@@ -34,7 +34,8 @@ show_menu () {
    "22" "Install patch for proper window borders"\
    "23" "Install patch for use sonoff with mqtt"\
    "24" "Add metatag to enable ""Add to home"" screen on IOS devices #230"\
-   "25" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
+   "25" "add sound massages to the browser"\
+   "26" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
@@ -280,7 +281,7 @@ show_menu () {
            fi
            ;;
        23)
-           confirmAnswer "Install patch for use mqtt of a sonoff with tasmota firmware. First install mqtt addon from CBPI!"
+           confirmAnswer "Install patch for use mqtt of a sonoff TH16 with DS18B20 and tasmota firmware. First install mqtt addon from CBPI!"
            if [ $? = 0 ]; then
              sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/__init__.py.mqtt
              sudo mv -b __init__.py.mqtt /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
@@ -292,7 +293,7 @@ show_menu () {
            fi
            ;;
        24)
-           confirmAnswer "add metatag to enable ""Add to home"" screen on IOS devices #230"
+           confirmAnswer "add metatag to enable <Add to home> screen on IOS devices. #230"
            if [ $? = 0 ]; then
              sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/index.html
              sudo mv -b index.html /home/pi/craftbeerpi3/modules/ui/static/index.html
@@ -304,6 +305,21 @@ show_menu () {
            fi
            ;;
        25)
+           confirmAnswer "add sound massages to the browser #215"
+           if [ $? = 0 ]; then
+             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/bundle.neu.js
+             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/beep.wav
+             sudo mv -b bundle.neu.js /home/pi/craftbeerpi3/modules/ui/static/bundle.js
+             sudo mv beep.wav /home/pi/craftbeerpi3/modules/ui/static/beep.wav
+             sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/bundle.js
+             sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/beep.wav
+             read -r -p "press enter to continue"
+            show_menu
+           else
+             show_menu
+           fi
+           ;;
+       26)
            confirmAnswer "Are you sure Restart CBPI3?"
            if [ $? = 0 ]; then
             sudo /etc/init.d/craftbeerpiboot stop
