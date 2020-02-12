@@ -11,7 +11,7 @@ import json
 from flask import Blueprint, render_template, jsonify, request
 from modules.core.props import Property
 
-debug = True
+debug = False
 
 blueprint = Blueprint('emanometer', __name__)
 cache = {}
@@ -40,7 +40,6 @@ class eManometer(SensorActive):
 			try:				
 				if cache[self.key] is not None:
 					reading = cache[self.key][self.sensorType]
-					# reading = round(reading, 3)
 					if debug:
 						cbpi.app.logger.info("eManometer - reading " + str(reading))
 					self.data_received(reading)
