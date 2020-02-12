@@ -9,7 +9,8 @@ return $?
 
 show_menu () {
    # We show the host name right in the menu title so we know which Pi we are connected to
-   OPTION=$(whiptail --title "CraftBeerPi 3.0.2" --menu "Choose your option:" 20 70 14 \
+   ipaddr="$(sudo ip addr show dev "$(ip route ls|awk '/default/ {print $5}')"|grep -Po 'inet \K(\d{1,3}\.?){4}')"
+   OPTION=$(whiptail --title "CraftBeerPi 3.0.2           $ipaddr" --menu "Choose your option:" 20 70 14 \
    "1" "Install CraftBeerPi" \
    "2" "Clear Database" \
    "3" "Add To Autostart" \
@@ -34,8 +35,9 @@ show_menu () {
    "22" "Install patch for proper window borders" \
    "23" "Install patch for use sonoff with mqtt" \
    "24" "Add metatag to enable ""Add to home"" screen on IOS devices #230" \
-   "25" "add sound massages to the browser" \
-   "26" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
+   "25" "Add sound massages to the browser" \
+   "26" "Add eManometer addin"\
+   "27" "Stop-del all Logfiles-Start"  3>&1 1>&2 2>&3)
 
    BUTTON=$?
    # Exit if user pressed cancel or escape
@@ -79,7 +81,7 @@ show_menu () {
              whiptail --title "Database Delted" --msgbox "The CraftBeerPi database was succesfully deleted. You must hit OK to continue." 8 78
              show_menu
            else
-            show_menu
+             show_menu
            fi
            ;;
        3)
@@ -91,7 +93,7 @@ show_menu () {
              whiptail --title "Added succesfull to autostart" --msgbox "The CraftBeerPi was added to autostart succesfully. You must hit OK to continue." 8 78
              show_menu
            else
-            show_menu
+             show_menu
            fi
            ;;
        4)
@@ -118,7 +120,7 @@ show_menu () {
            confirmAnswer "Are you sure you want to pull a software update?"
            if [ $? = 0 ]; then
              whiptail --textbox /dev/stdin 20 50 <<<"$(git pull)"
-             show_menu
+              show_menu
            else
               show_menu
            fi
@@ -287,7 +289,7 @@ show_menu () {
              sudo mv -b __init__.py.mqtt /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
              sudo chmod a+rwx /home/pi/craftbeerpi3/modules/plugins/MQTTPlugin/__init__.py
              read -r -p "press enter to continue"
-            show_menu
+             show_menu
            else
              show_menu
            fi
@@ -299,7 +301,7 @@ show_menu () {
              sudo mv -b index.html /home/pi/craftbeerpi3/modules/ui/static/index.html
              sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/index.html
              read -r -p "press enter to continue"
-            show_menu
+             show_menu
            else
              show_menu
            fi
@@ -314,20 +316,33 @@ show_menu () {
              sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/bundle.js
              sudo chmod a+rwx /home/pi/craftbeerpi3/modules/ui/static/beep.wav
              read -r -p "press enter to continue"
-            show_menu
+             show_menu
            else
              show_menu
            fi
            ;;
        26)
+           confirmAnswer "Add eManometer addon"
+           if [ $? = 0 ]; then
+             sudo mkdir /home/pi/craftbeerpi3/modules/plugins/eManometer
+             sudo wget https://raw.githubusercontent.com/JamFfm/Misc/master/eManometer/__init__.py.eManometer
+             sudo mv -b __init__.py.eManometer /home/pi/craftbeerpi3/modules/plugins/eManometer/__init__.py
+             sudo chmod a+rwx /home/pi/craftbeerpi3/modules/plugins/eManometer/__init__.py
+             read -r -p "press enter to continue"
+             show_menu
+           else
+             show_menu
+           fi
+           ;;
+       27)
            confirmAnswer "Are you sure Restart CBPI3?"
            if [ $? = 0 ]; then
-            sudo /etc/init.d/craftbeerpiboot stop
-            sudo rm -rf logs/*.log
-            sudo /etc/init.d/craftbeerpiboot start
-            show_menu
+             sudo /etc/init.d/craftbeerpiboot stop
+             sudo rm -rf logs/*.log
+             sudo /etc/init.d/craftbeerpiboot start
+             show_menu
            else
-            show_menu
+             show_menu
            fi
            ;;
        esac
