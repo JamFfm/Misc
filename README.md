@@ -1,5 +1,11 @@
 # Misc
 
+This is my collection of CBPi3 "Patches" and helpful gadgets.
+
+They all can be installes via install.sh
+In this read me I just explaine what and how the scripts innstall.
+
+
 To copy all the contend of this Misc repository to the downloads folder of Raspi:
 
     sudo git clone https://github.com/JamFfm/Misc.git --single-branch /home/pi/Downloads/Misc
@@ -8,8 +14,9 @@ To copy all the contend of this Misc repository to the downloads folder of Raspi
 
 This file is modified so i can install some helpful tools in an easy way.
 Helpful if you reinstall CBPi.
-To manually open the installer file use:
+To manually run the installer file copy it to the folder /home/pi/craftbeerpi3 and key in:
 
+    cd /home/pi/craftbeerpi3
     sudo ./install.sh
 
 ## los.sh
