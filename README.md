@@ -56,6 +56,11 @@ You need to install paho-mqtt and mosquitto to use the mqtt addon in general. Yo
 
 Use the file without x.mqtt ending in the path of the mqtt addon.
 
+Here you can see the paremeter of the mqtt Sensor add:
+
+
+![Screens](https://github.com/JamFfm/Misc/blob/master/sonoffMqttParameterInCBPI3.jpg "Parameter of Mqtt Plugin")
+
 ## cbpi-BetterChart
 
 Add a new chart engine to cbpi. But first you have to install the CBPi addon "ExtendedMenue"
