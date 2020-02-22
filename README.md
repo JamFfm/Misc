@@ -134,6 +134,19 @@ it looks like:
 
 And put any wav file in the folder home/pi/craftbeerpi3/modules/ui/static/ called beep.wav "
 
+## ESPEasy config for generic http: ##
+
+
+
+Use this link for the picture how to set parameter on the ESPEasy side.
+
+https://www.facebook.com/photo.php?fbid=534968119609&set=pcb.1724788664490943&type=3&ifg=1
+
+This is the CBPi 3 side of the http actor addon:
+
+![Screens](https://github.com/JamFfm/Misc/blob/master/Http_Actor.PNG "Parameter of http Plugin")
+
+
 
 
 
