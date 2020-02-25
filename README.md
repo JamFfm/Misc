@@ -46,6 +46,8 @@ https://github.com/Manuel83/craftbeerpi3/pull/84?fbclid=IwAR2qc6S3yJuj3ILhWCJ8Zz
 
 ## init.py.mqtt
 
+*sonoff
+
 This file should replace the orign file in the mqtt addon if you **want to use mqtt via sonoff with tasmota firmware**. Only the jason string to detect the status is changed.
 
 You need to install paho-mqtt and mosquitto to use the mqtt addon in general. You can do this by the install script or use this:
@@ -56,10 +58,21 @@ You need to install paho-mqtt and mosquitto to use the mqtt addon in general. Yo
 
 Use the file without x.mqtt ending in the path of the mqtt addon.
 
-Here you can see the paremeter of the mqtt Sensor add:
+Here you can see the paremeter of the mqtt Sensor addon in use if a sonoffTH16:
 
 
 ![Screens](https://github.com/JamFfm/Misc/blob/master/sonoffMqttParameterInCBPI3.jpg "Parameter of Mqtt Plugin")
+![Screens](https://github.com/JamFfm/Misc/blob/master/sonoffMqttParameterInCBPI3Actor.jpg "Parameter of Mqtt Plugin")
+
+## ESPEasy config for generic http: ##
+
+Use this link for the picture how to set parameter on the ESPEasy side.
+
+https://www.facebook.com/photo.php?fbid=534968119609&set=pcb.1724788664490943&type=3&ifg=1
+
+This is the CBPi 3 side of the http actor addon:
+
+![Screens](https://github.com/JamFfm/Misc/blob/master/Http_Actor.PNG "Parameter of http Plugin")
 
 ## cbpi-BetterChart
 
@@ -134,21 +147,5 @@ it looks like:
 
 And put any wav file in the folder home/pi/craftbeerpi3/modules/ui/static/ called beep.wav "
 
-## ESPEasy config for generic http: ##
-
-
-
-Use this link for the picture how to set parameter on the ESPEasy side.
-
-https://www.facebook.com/photo.php?fbid=534968119609&set=pcb.1724788664490943&type=3&ifg=1
-
-This is the CBPi 3 side of the http actor addon:
-
-![Screens](https://github.com/JamFfm/Misc/blob/master/Http_Actor.PNG "Parameter of http Plugin")
-
-
-
-
 
 Have fun brewing!!
-
