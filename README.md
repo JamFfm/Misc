@@ -58,11 +58,12 @@ You need to install paho-mqtt and mosquitto to use the mqtt addon in general. Yo
 
 Use the file without x.mqtt ending in the path of the mqtt addon.
 
-Here you can see the paremeter of the mqtt Sensor addon in use if a sonoffTH16:
+Here you can see the paraemeter of the mqtt Sensor addon in use of a sonoffTH16:
 
 
 ![Screens](https://github.com/JamFfm/Misc/blob/master/sonoffMqttParameterInCBPI3.jpg "Parameter of Mqtt Plugin")
 ![Screens](https://github.com/JamFfm/Misc/blob/master/sonoffMqttParameterInCBPI3Actor.jpg "Parameter of Mqtt Plugin")
+
 
 ## ESPEasy config for generic http: ##
 
@@ -73,6 +74,7 @@ https://www.facebook.com/photo.php?fbid=534968119609&set=pcb.1724788664490943&ty
 This is the CBPi 3 side of the http actor addon:
 
 ![Screens](https://github.com/JamFfm/Misc/blob/master/Http_Actor.PNG "Parameter of http Plugin")
+
 
 ## cbpi-BetterChart
 
