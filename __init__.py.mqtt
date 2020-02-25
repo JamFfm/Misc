@@ -9,35 +9,72 @@ from modules.core.props import Property
 
 q = Queue()
 
+
 def on_connect(client, userdata, flags, rc):
     print("MQTT Connected" + str(rc))
 
+
 class MQTTThread (threading.Thread):
 
-    def __init__(self,server,port,username,password):
+    def __init__(self, server, port,username, password, tls):
         threading.Thread.__init__(self)
         self.server = server
         self.port = port
         self.username = username
         self.password = password
+        self.tls = tls
 
     client = None
+
     def run(self):
         self.client = mqtt.Client()
         self.client.on_connect = on_connect
+
+        if self.username != "username" and self.password != "password":
+            self.client.username_pw_set(self.username, self.password)
+        
+        if self.tls.lower() == 'true':
+            self.client.tls_set_context(context=None)
+
         self.client.connect(str(self.server), int(self.port), 60)
         self.client.loop_forever()
 
+
 @cbpi.actor
-class MQTTActor(ActorBase):
+class Orig_MQTTActor(ActorBase):
+    # Original addon definition
     topic = Property.Text("Topic", configurable=True, default_value="", description="MQTT TOPIC")
+
     def on(self, power=100):
-        #self.api.cache["mqtt"].client.publish(self.topic, payload=json.dumps({"state": "on"}), qos=0, retain=False)
-        self.api.cache["mqtt"].client.publish(self.topic, payload="ON", qos=0, retain=False)
+        self.api.cache["mqtt"].client.publish(self.topic, payload=json.dumps({"state": "on"}), qos=2, retain=True)
 
     def off(self):
-        #self.api.cache["mqtt"].client.publish(self.topic, payload=json.dumps({"state": "off"}), qos=0, retain=False)
-        self.api.cache["mqtt"].client.publish(self.topic, payload="OFF", qos=0, retain=False)
+        self.api.cache["mqtt"].client.publish(self.topic, payload=json.dumps({"state": "off"}), qos=2, retain=True)
+
+
+@cbpi.actor
+class ESPEasyMQTT(ActorBase):
+    # ESPEasy definition
+    topic = Property.Text("Topic", configurable=True, default_value="", description="MQTT TOPIC")
+
+    def on(self, power=100):
+        self.api.cache["mqtt"].client.publish(self.topic, payload=1, qos=2, retain=True)
+
+    def off(self):
+        self.api.cache["mqtt"].client.publish(self.topic, payload=0, qos=2, retain=True)
+
+
+@cbpi.actor
+class MQTTActor(ActorBase):
+    # sonoff definition
+    topic = Property.Text("Topic", configurable=True, default_value="", description="MQTT TOPIC")
+
+    def on(self, power=100):
+        self.api.cache["mqtt"].client.publish(self.topic, payload="ON", qos=2, retain=True)
+
+    def off(self):
+        self.api.cache["mqtt"].client.publish(self.topic, payload="OFF", qos=2, retain=True)
+
 
 @cbpi.sensor
 class MQTT_SENSOR(SensorActive):
@@ -46,6 +83,7 @@ class MQTT_SENSOR(SensorActive):
     c_unit = Property.Text("Unit", configurable=True, default_value="", description="Units to display")
 
     last_value = None
+
     def init(self):
         self.topic = self.a_topic
         if self.b_payload == "":
@@ -55,25 +93,25 @@ class MQTT_SENSOR(SensorActive):
         self.unit = self.c_unit[0:3]
 
         SensorActive.init(self)
+
         def on_message(client, userdata, msg):
             
             try:
-                print "payload " + msg.payload        
+                print ("payload " + msg.payload)
                 json_data = json.loads(msg.payload)
-                #print json_data
+                # print (json_data)
                 val = json_data
                 if self.payload_text is not None:
                     for key in self.payload_text:
                         val = val.get(key, None)
-                #print val
+                # print (val)
                 if isinstance(val, (int, float, basestring)):
                     q.put({"id": on_message.sensorid, "value": val})
             except Exception as e:
-                print e
+                print (e)
         on_message.sensorid = self.id
         self.api.cache["mqtt"].client.subscribe(self.topic)
         self.api.cache["mqtt"].client.message_callback_add(self.topic, on_message)
-
 
     def get_value(self):
         return {"value": self.last_value, "unit": self.unit}
@@ -86,11 +124,12 @@ class MQTT_SENSOR(SensorActive):
         SensorActive.stop(self)
 
     def execute(self):
-        '''
+        """
         Active sensor has to handle his own loop
-        :return: 
-        '''
+        :return:
+        """
         self.sleep(5)
+
 
 @cbpi.initalizer(order=0)
 def initMQTT(app):
@@ -115,9 +154,15 @@ def initMQTT(app):
         password = "password"
         cbpi.add_config_parameter("MQTT_PASSWORD", "password", "text", "MQTT password")
 
-    app.cache["mqtt"] = MQTTThread(server,port,username, password)
+    tls = app.get_config_parameter("MQTT_TLS", None)
+    if tls is None:
+        tls = "false"
+        cbpi.add_config_parameter("MQTT_TLS", "false", "text", "MQTT TLS")
+
+    app.cache["mqtt"] = MQTTThread(server,port,username, password, tls)
     app.cache["mqtt"].daemon = True
     app.cache["mqtt"].start()
+    
     def mqtt_reader(api):
         while True:
             try:
