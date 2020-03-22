@@ -10,6 +10,8 @@ To copy all the contend of this Misc repository to the downloads folder of Raspi
 
     sudo git clone https://github.com/JamFfm/Misc.git --single-branch /home/pi/Downloads/Misc
     
+
+    
 ## Install.sh
 
 This file is modified so i can install some helpful tools in an easy way.
@@ -18,6 +20,37 @@ To manually run the installer file copy it to the folder /home/pi/craftbeerpi3 a
 
     cd /home/pi/craftbeerpi3
     sudo ./install.sh
+
+The install file covers the following themes:
+
+      1 Install CraftBeerPi 
+      2 Clear Database 
+      3 Add To Autostart 
+      4 Remove From Autostart 
+      5 Start CraftBeerPi 
+      6 Stop CraftBeerPi 
+      7 Software Update (git pull) 
+      8 Reset File Changes (git reset --hard) 
+      9 Clear all logs 
+     10 Reboot Raspberry Pi 
+     11 Install SQL Light Client 
+     12 Install Mqtt lib 
+     13 Install Mqtt broker 
+     14 Clone all files from git Misc in Downloads 
+     15 Install TFTDisplay libs 
+     16 Install Alexa libs. Notice Readme of addon 
+     17 Install rrdTool 
+     18 Detect I2C address (ex.for LCDDisplay plugin) 
+     19 Install MCP3008 to read analog devices 
+     20 Install betterCharts Plugin 
+     21 Install CBPi desktop icon 
+     22 Install patch for proper window borders 
+     23 Install patch for use sonoff with mqtt 
+     24 Add metatag to enable Add to home screen on IOS devices #230 
+     25 Add sound messages to the browser 
+     26 Add eManometer addin
+     27 Replace requirements to make install CBPi 3 without errors
+     28 Stop-del all Logfiles-Start
 
 ## los.sh
 
